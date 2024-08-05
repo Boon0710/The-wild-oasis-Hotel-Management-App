@@ -10,6 +10,9 @@ import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
 import GlobalStyles from "./styles/GlobalStyles";
 import AppLayout from "./ui/AppLayout";
+import Booking from "./pages/Booking";
+import CheckIn from "./pages/CheckIn";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 import { Toaster } from "react-hot-toast";
 
@@ -31,10 +34,18 @@ function App() {
       <GlobalStyles />
       <BrowserRouter>
         <Routes>
-          <Route element={<AppLayout />}>
+          <Route
+            element={
+              <ProtectedRoute>
+                <AppLayout />
+              </ProtectedRoute>
+            }
+          >
             <Route index element={<Navigate replace to="dashboard" />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="bookings" element={<Bookings />} />
+            <Route path="bookings/:bookingId" element={<Booking />} />
+            <Route path="checkin/:bookingId" element={<CheckIn />} />
             <Route path="users" element={<Users />} />
             <Route path="cabins" element={<Cabins />} />
             <Route path="settings" element={<Settings />} />
@@ -60,8 +71,8 @@ function App() {
             maxWidth: "500px",
             padding: "16px 24px",
             backgroundColor: "var(--color-grey-0)",
-            color: "var(--color-grey-700)"
-          }
+            color: "var(--color-grey-700)",
+          },
         }}
       />
     </QueryClientProvider>
